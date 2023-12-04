@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<!-- <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"> -->
+	<meta name="mobile-web-app-capable" content="yes">
+	<meta name="apple-mobile-web-app-capable" content="yes">
+
+	<title>Parking App</title>
+
+	<link rel="stylesheet" href="css/normalize.css">
+	<link rel="stylesheet" href="css/screen.css">
+</head>
+
+<body>
+	<div class="c-app js-app u-hidden">
+		<h1 class="c-title">Parkeer bezettingen in Gent</h1>
+		<div class="c-list__wrapper js-list-wrapper">
+			<ul class="c-list js-list">
+
+			</ul>
+		</div>
+		<div class="c-parking">
+			<div class="c-parking__placeholder js-parking-placeholder">
+				<h2 class="js-parking-placeholder__title">Selecteer een parking</h2>
+			</div>
+			<div class="c-parking__loader js-parking-loader u-hidden">
+				<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" class="c-parking__loader-icon">
+					<circle cx="64" cy="176" r="24" fill="none" stroke-linecap="round" stroke-linejoin="round"
+						stroke-width="16" />
+					<circle cx="192" cy="176" r="24" fill="none" stroke-linecap="round" stroke-linejoin="round"
+						stroke-width="16" />
+					<line x1="88" y1="176" x2="168" y2="176" fill="none" stroke-linecap="round" stroke-linejoin="round"
+						stroke-width="16" />
+					<path
+						d="M216,176h24a8,8,0,0,0,8-8V128a8,8,0,0,0-8-8H208L162.34,74.34A8,8,0,0,0,156.69,72H44.28a8,8,0,0,0-6.65,3.56L8,120v48a8,8,0,0,0,8,8H40"
+						fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="16" />
+					<line x1="208" y1="120" x2="8" y2="120" fill="none" stroke-linecap="round" stroke-linejoin="round"
+						stroke-width="16" />
+				</svg>
+			</div>
+			<div class="c-parking__info u-hidden js-parking-info">
+				<div class="c-parking__title">
+					<h2 class="js-parking-title c-parking__title__name">/</h2>
+					<span class="c-parking__title__favorite js-parking-favorite">
+						<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256">
+							<path
+								d="M135.34,28.9l23.23,55.36a8,8,0,0,0,6.67,4.88l59.46,5.14a8,8,0,0,1,4.54,14.07L184.13,147.7a8.08,8.08,0,0,0-2.54,7.89l13.52,58.54a8,8,0,0,1-11.89,8.69l-51.1-31a7.93,7.93,0,0,0-8.24,0l-51.1,31a8,8,0,0,1-11.89-8.69l13.52-58.54a8.08,8.08,0,0,0-2.54-7.89L26.76,108.35A8,8,0,0,1,31.3,94.28l59.46-5.14a8,8,0,0,0,6.67-4.88L120.66,28.9A8,8,0,0,1,135.34,28.9Z"
+								fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="16" />
+						</svg>
+					</span>
+				</div>
+				<div class="c-parking__status js-parking-status">
+					<span class="c-parking__status__label">Bezette plaatsen</span>
+					<div class="box gauge--3">
+						<div class="mask">
+							<div class="semi-circle"></div>
+							<div class="semi-circle--mask"></div>
+						</div>
+						<div class="c-parking__status__values">
+							<span class="js-parking-curr-occupation c-parking__status__values__curr">0</span>
+							<span class="c-parking__status__values__occup js-parking-occup">/</span>
+							<span class="js-parking-max-occupation c-parking__status__values__max">0</span>
+						</div>
+					</div>
+				</div>
+				<div class="c-parking__details">
+					<button class="c-parking__details__btn--category c-parking__details__btn js-parking-category-btn o-button-reset">
+						<div
+							class="c-parking__details__icon--category c-parking__details__icon js-parking-category-icon">
+							<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256">
+								<path
+									d="M63.81,192.19c-47.89-79.81,16-159.62,151.64-151.64C223.43,176.23,143.62,240.08,63.81,192.19Z"
+									fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="16" />
+								<line x1="160" y1="96" x2="40" y2="216" fill="none" stroke-linecap="round"
+									stroke-linejoin="round" stroke-width="16" />
+							</svg>
+						</div>
+						<span class="c-parking__details__item c-parking__details__item--category js-parking-category">/</span>
+						<span class="c-parking__details__hint">Check hier je wagen</span>
+					</button>
+
+					<button class="c-parking__details__btn--location c-parking__details__btn js-parking-location-btn o-button-reset">
+						<div class="c-parking__details__icon--location c-parking__details__icon
+						js-parking-location-icon">
+							<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256">
+								<circle cx="128" cy="104" r="32" fill="none" stroke-linecap="round" stroke-linejoin="round"
+									stroke-width="16" />
+								<path d="M208,104c0,72-80,128-80,128S48,176,48,104a80,80,0,0,1,160,0Z" fill="none"
+									stroke-linecap="round" stroke-linejoin="round" stroke-width="16" />
+							</svg>
+						</div>
+						<span class="c-parking__details__item c-parking__details__item--location js-parking-location">/</span>
+						<span class="c-parking__details__hint">Open in Google Maps</span>
+					</button>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="c-loader js-loader">
+		<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" class="c-loader-icon">
+			<circle cx="64" cy="176" r="24" fill="none" stroke-linecap="round" stroke-linejoin="round"
+				stroke-width="16" />
+			<circle cx="192" cy="176" r="24" fill="none" stroke-linecap="round" stroke-linejoin="round"
+				stroke-width="16" />
+			<line x1="88" y1="176" x2="168" y2="176" fill="none" stroke-linecap="round" stroke-linejoin="round"
+				stroke-width="16" />
+			<path
+				d="M216,176h24a8,8,0,0,0,8-8V128a8,8,0,0,0-8-8H208L162.34,74.34A8,8,0,0,0,156.69,72H44.28a8,8,0,0,0-6.65,3.56L8,120v48a8,8,0,0,0,8,8H40"
+				fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="16" />
+			<line x1="208" y1="120" x2="8" y2="120" fill="none" stroke-linecap="round" stroke-linejoin="round"
+				stroke-width="16" />
+		</svg>
+	</div>
+</body>
+<script src="js/app.js"></script>
+<script>
+	// document.addEventListener('DOMContentLoaded', function () {
+	// 	const listItems = document.querySelector('.c-list');
+	// 	listItems.addEventListener('mouseover', function (){
+	// 		console.log("help");
+	// 	});
+	// });
+</script>
+
+</html>
