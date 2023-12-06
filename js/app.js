@@ -53,7 +53,6 @@ const getNames = async () => {
         renderList(parkings);
 
         const favoriteParking = localStorage.getItem(`FavoriteParking`);
-        console.log("Favorite parking: " + favoriteParking);
         if (favoriteParking) {
             const favoriteParkingRadio = document.querySelector(`input[parking-number="${favoriteParking}"]`);
             if (favoriteParkingRadio) {
@@ -89,11 +88,9 @@ const renderList = (parkings) => {
         $radio.setAttribute(`value`, `${parking.name}`);
         $radio.setAttribute(`id`, `${parking.name}`);
         $radio.setAttribute(`parking-number`, i);
-        console.log("Parking number: " + i);
         $radio.onchange = function () {
             let parkingNumber = this.getAttribute(`parking-number`);
             renderParking(parking.id, parkingNumber);
-            console.log("Rendering number: " + parkingNumber + " - " + parking.name);
             //force remove the hover state from the list wrapper
             $listWrapper.classList.remove(`c-list__wrapper--hover`);
         }
@@ -183,7 +180,6 @@ const renderParking = async (parkingId, parkingNumber) => {
             lon = lon.toFixed(4);
 
             let coordinates = lat + "°N, " + lon + "°E";
-            console.log(coordinates);
             $parkingLocation.textContent = coordinates;
 
             // Add an event listener to the location button
@@ -229,7 +225,6 @@ const getDetails = async (id) => {
         const response = await fetch(apiUrl);
         const data = await response.json();
         const parking = data.results;
-        console.log(parking);
         return parking;
     } catch (error) {
         $parkingInfo.classList.add(`u-hidden`);
