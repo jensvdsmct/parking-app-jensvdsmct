@@ -152,7 +152,7 @@ const renderParking = async (parkingId, parkingNumber) => {
         $parkingTitle.textContent = parkingDetails[0].name;
 
 
-        if (parkingDetails[0].isopennow = 0) {
+        if (parkingDetails[0].isopennow != 0) {
             $parkingStatus.classList.add(`c-parking__status--closed`);
             $parkingStatus.textContent = "Gesloten";
             $parkingDetails.classList.add(`u-hidden`);
