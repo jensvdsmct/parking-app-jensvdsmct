@@ -11,11 +11,13 @@ const $parkingInfo = document.querySelector(`.js-parking-info`);
 const $parkingLoader = document.querySelector(`.js-parking-loader`);
 const $parkingTitle = document.querySelector(`.js-parking-title`);
 const $parkingFavorite = document.querySelector(`.js-parking-favorite`);
+
 const $parkingStatus = document.querySelector(`.js-parking-status`);
 const $parkingCurrOccupation = document.querySelector(`.js-parking-curr-occupation`);
 const $parkingMaxOccupation = document.querySelector(`.js-parking-max-occupation`);
 const $parkingOccupation = document.querySelector(`.js-parking-occup`);
 const $gauge = document.querySelector(`.gauge--3 .semi-circle--mask`);
+
 const $parkingDetails = document.querySelector(`.js-parking-details`);
 const $parkingCattegory = document.querySelector(`.js-parking-category`);
 const $parkingCategoryIcon = document.querySelector(`.js-parking-category-icon`);
@@ -59,6 +61,13 @@ const getNames = async () => {
                 favoriteParkingRadio.onchange();
             }
         }
+        else {
+            const firstParkingRadio = document.querySelector(`input[parking-number="1"]`);
+            if (firstParkingRadio) {
+                firstParkingRadio.checked = true;
+                firstParkingRadio.onchange();
+            }
+        }
 
         $loader.classList.add(`u-hidden`);
         $app.classList.remove(`u-hidden`);
@@ -82,8 +91,9 @@ const renderList = (parkings) => {
         $radio.setAttribute(`parking-number`, i);
         console.log("Parking number: " + i);
         $radio.onchange = function () {
-            renderParking(parking.id, i);
-            console.log("Rendering number: " + i + " - " + parking.name);
+            let parkingNumber = this.getAttribute(`parking-number`);
+            renderParking(parking.id, parkingNumber);
+            console.log("Rendering number: " + parkingNumber + " - " + parking.name);
             //force remove the hover state from the list wrapper
             $listWrapper.classList.remove(`c-list__wrapper--hover`);
         }
@@ -105,6 +115,13 @@ const renderParking = async (parkingId, parkingNumber) => {
     // Set a flag to track whether the request is taking longer than 0.5 seconds
     let isDelayed = false;
 
+    if (parkingNumber == localStorage.getItem(`FavoriteParking`)) {
+        $parkingFavorite.classList.add(`u-favorite`);
+    }
+    else {
+        $parkingFavorite.classList.remove(`u-favorite`);
+    }
+
     // Show the loader after 0.5 seconds
     const delayTimeout = setTimeout(() => {
         if (!isDelayed) {
@@ -122,9 +139,13 @@ const renderParking = async (parkingId, parkingNumber) => {
     isDelayed = true;
 
     $parkingFavorite.onclick = function () {
-        $parkingFavorite.classList.toggle(`c-parking__favorite--active`);
-        localStorage.setItem(`FavoriteParking`, parkingNumber);
-        console.log("Favorite parking: " + parkingNumber);
+        $parkingFavorite.classList.toggle(`u-favorite`);
+        if ($parkingFavorite.classList.contains(`u-favorite`)) {
+            localStorage.setItem(`FavoriteParking`, parkingNumber);
+        }
+        else {
+            localStorage.removeItem(`FavoriteParking`);
+        }
     }
 
     if (parkingDetails) {

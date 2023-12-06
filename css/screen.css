@@ -1,3 +1,5 @@
+@import "https://unpkg.com/open-props/easings.min.css";
+
 @font-face {
     font-family: 'Fira Sans';
     src: url('../fonts/FiraSans-Bold.ttf') format('truetype');
@@ -37,6 +39,8 @@
     --global-color-parking-closed: #ff0000;
 
     --global-color-lez-green: hsl(120, 59%, 45%);
+
+    --global-color-favorite: hsl(51, 100%, 50%);
 
     /* Colors for the gauge. Full is when there are no parkspaces left. */
     --global-color-gauge-full: hsl(0deg 70% 56%);
@@ -118,7 +122,7 @@ body {
     box-shadow: var(--shadow-elevation-high);
     display: grid;
     grid-template-columns: 1fr 30rem;
-    grid-template-rows: 4rem auto;
+    grid-template-rows: 4rem 40rem;
     animation: fade-in 0.5s ease-in-out forwards;
 }
 
@@ -166,7 +170,6 @@ body {
     grid-area: 2/1;
     display: grid;
     align-items: start;
-    gap: 0.5rem;
     margin-left: -1rem;
     padding: 1rem;
 }
@@ -178,6 +181,7 @@ body {
     place-items: center;
     margin: 0;
     width: 100%;
+    margin-bottom: 0.15rem;
 }
 
 .c-list__item__label:has(input:focus) {
@@ -277,13 +281,45 @@ body {
     width: 100%;
     font-size: 1.5rem;
     font-weight: bold;
-    color: var(--global-color-neutral-500);
-    margin-bottom: -0.75rem;
+    stroke: var(--global-color-neutral-500);
+    fill: var(--global-color-neutral-050);
     cursor: pointer;
+    display: grid;
+    place-items: center;
     transition: all 0.2s ease-in-out;
 
     &:hover {
-        color: var(--global-color-primary-500);
+        opacity: 0.5;
+    }
+
+    & .icon--add {
+        opacity: 1;
+        transform: rotate(0);
+    }
+
+    & .icon--star {
+        opacity: 0;
+        transform: rotate(-45deg);
+    }
+}
+
+.c-parking__title__icon {
+    grid-area: 1/1;
+    transition: opacity, color, transform 0.2s var(--ease-elastic-out-1);
+}
+
+.u-favorite {
+    fill: var(--global-color-favorite);
+    stroke: var(--global-color-favorite);
+
+    & .icon--add {
+        opacity: 0;
+        transform: rotate(-45deg);
+    }
+
+    & .icon--star {
+        opacity: 1;
+        transform: rotate(0);
     }
 }
 
@@ -347,10 +383,6 @@ body {
     height: 100%;
     background-color: var(--global-color-neutral-100);
     border: 1px solid var(--global-color-neutral-200);
-}
-
-.u-hidden {
-    display: none;
 }
 
 .mask {
@@ -439,7 +471,10 @@ body {
 
     &:hover {
         background-color: var(--global-color-neutral-200);
-        content: "test";
+
+        & .c-parking__details__icon {
+            transform: scale(1.3);
+        }
     }
 
     &:focus {
@@ -453,6 +488,8 @@ body {
     stroke: var(--global-color-neutral-500);
     fill: var(--global-color-neutral-500);
     width: 30%;
+
+    transition: all 0.3s var(--ease-elastic-out-1);
 }
 
 .c-parking__details__icon--category--LEZ {
@@ -471,6 +508,10 @@ body {
 .c-parking__details__hint {
     grid-area: 3/1;
     font-size: 0.75rem;
+}
+
+.u-hidden {
+    display: none;
 }
 
 @keyframes change-stroke {
@@ -502,6 +543,10 @@ body {
     .c-app {
         grid-template-columns: 1fr 20rem;
     }
+
+    .c-parking__placeholder {
+        font-size: 1rem;
+    }
 }
 
 @media screen and (max-width: 750px) {
@@ -514,7 +559,7 @@ body {
 
     .c-app {
         grid-template-columns: 80vw;
-        grid-template-rows: 1.5rem 1fr 4fr;
+        grid-template-rows: 1.5rem 5rem 35rem;
         padding-top: 1rem;
     }
 
@@ -576,9 +621,14 @@ body {
     }
 
     .c-parking__info {
-        height: 100%;
+        height: 35rem;
         grid-template-columns: 1fr;
         grid-template-rows: 5rem 3fr 2fr;
+    }
+
+    .c-parking__loader {
+        grid-area: 1/1/auto/auto;
+        height: 35rem;
     }
 
     .c-parking__title {
@@ -594,6 +644,7 @@ body {
     }
 
     .c-parking__placeholder {
+        height: 35rem;
         font-size: 1rem;
     }
 
@@ -609,11 +660,11 @@ body {
     }
 
     .c-parking__details__item {
-        font-size: 0.75rem;
+        font-size: 1rem;
     }
 
     .c-parking__details__hint {
-        font-size: 0.5rem;
+        font-size: 0.75rem;
     }
 
     .mask {
@@ -626,6 +677,10 @@ body {
 @media screen and (max-width: 350px) {
     .c-title {
         font-size: 1rem;
+    }
+
+    .c-parking__placeholder {
+        font-size: 0.75rem;
     }
 
     .c-parking__title__name {
@@ -641,6 +696,6 @@ body {
     }
 
     .c-parking__details__hint {
-        font-size: 0.4rem;
+        font-size: 0.6rem;
     }
 }
