@@ -182,6 +182,7 @@ body {
     margin: 0;
     width: 100%;
     margin-bottom: 0.15rem;
+    transition: all 0.2s ease-in-out;
 }
 
 .c-list__item__label:has(input:focus) {
@@ -507,7 +508,7 @@ body {
 .c-parking__details__item {
     grid-area: 2/1;
     text-decoration: underline;
-    
+
     transition: all 0.3s var(--ease-elastic-out-1);
 }
 

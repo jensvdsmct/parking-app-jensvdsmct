@@ -218,11 +218,6 @@ const getDetails = async (id) => {
     }
 };
 
-const openMaps = (lat, lon) => {
-    // Open the default navigation app with the coordinates
-
-}
-
 const init = () => {
     getNames();
 
