@@ -27,6 +27,7 @@ const $parkingUrl = document.querySelector(`.js-parking-url`);
 const $parkingLocation = document.querySelector(`.js-parking-location`);
 const $parkingLocationBtn = document.querySelector(`.js-parking-location-btn`);
 
+var currentCoordinates;
 
 const getNames = async () => {
     const apiUrl = `https://data.stad.gent/api/explore/v2.1/catalog/datasets/bezetting-parkeergarages-real-time/records?select=id%2C%20name&limit=100`;
@@ -145,7 +146,7 @@ const renderParking = async (parkingId, parkingNumber) => {
         }
     }
 
-    if (parkingDetails) {
+    if (parkingDetails && parkingDetails.length > 0) {
         $parkingTitle.textContent = parkingDetails[0].name;
 
 
@@ -175,6 +176,8 @@ const renderParking = async (parkingId, parkingNumber) => {
             let lat = parkingDetails[0].location.lat;
             let lon = parkingDetails[0].location.lon;
 
+            currentCoordinates = lat + "," + lon;
+
             // Round the coordinates to 4 decimals
             lat = lat.toFixed(4);
             lon = lon.toFixed(4);
@@ -182,25 +185,6 @@ const renderParking = async (parkingId, parkingNumber) => {
             let coordinates = lat + "°N, " + lon + "°E";
             $parkingLocation.textContent = coordinates;
 
-            // Add an event listener to the location button
-            $parkingLocationBtn.addEventListener('click', () => {
-                // Open the default navigation app with the not rounded up coordinates
-                const navigationUrl = `https://maps.google.com/?q=${lat},${lon}`;
-                window.open(navigationUrl, '_blank');
-            });
-            
-
-            // let description = parkingDetails[0].description;
-            // description = description.charAt(0).toUpperCase() + description.slice(1);
-            // $parkingDescription.textContent = description;
-
-            // $parkingUrl.innerHTML = ``;
-            // let url = parkingDetails[0].urllinkaddress;
-            // const urlLink = document.createElement(`a`);
-            // urlLink.setAttribute(`href`, url);
-            // urlLink.setAttribute(`target`, `_blank`);
-            // urlLink.textContent = "Meer info";
-            // $parkingUrl.appendChild(urlLink);
         }
     } else {
         $parkingPlaceholder.classList.remove(`u-hidden`);
@@ -234,6 +218,11 @@ const getDetails = async (id) => {
     }
 };
 
+const openMaps = (lat, lon) => {
+    // Open the default navigation app with the coordinates
+
+}
+
 const init = () => {
     getNames();
 
@@ -254,6 +243,14 @@ const init = () => {
     $parkingCategoryBtn.addEventListener(`click`, () => {
         let url = "https://lez.stad.gent/";
         window.open(url, `_blank`);
+    });
+
+    // Add an event listener to the location button
+    $parkingLocationBtn.addEventListener('click', () => {
+        if (currentCoordinates != null) {
+            const navigationUrl = `https://maps.google.com/?q=${currentCoordinates}`;
+            window.open(navigationUrl, '_blank');
+        }
     });
 };
 
