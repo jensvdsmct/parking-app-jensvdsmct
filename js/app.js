@@ -226,7 +226,7 @@ const init = () => {
         $listWrapper.classList.add(`c-list__wrapper--hover`);
     });
 
-    $listWrapper.addEventListener(`click`, () => {
+    $listWrapper.addEventListener(`touchstart`, () => {
         $listWrapper.classList.add(`c-list__wrapper--hover`);
     });
 
